@@ -45,7 +45,13 @@ sub render_breadcrumbs
 
 		$bd->appendChild( $self->handler->sets->render_set_name( $set->{set_name} ) );
 		$bd->appendChild( $session->make_text( ": " ) );
-		$bd->appendChild( $self->handler->sets->render_set( $set->{set_name}, $set->{set_value} ) );
+		if ($set->{set_name} eq 'eprint') {
+			# non uso la cache dato che qui' non viene creata
+			$bd->appendChild( $self->handler->sets->render_set( $set->{set_name}, $set->{set_value}, 0 ) );
+		}
+		else {
+			$bd->appendChild( $self->handler->sets->render_set( $set->{set_name}, $set->{set_value} ) );
+		}
 	}
 	else
 	{
@@ -113,7 +119,7 @@ sub render_filters
 	
 ## Filter Items content
         my @sets = @{$self->handler->sets->get_sets_names()||[]};
-	push @sets, 'eprintid';
+#	push @sets, 'eprintid';
 
         my $local_context = $self->handler->context->from_request( $session );
         my $report = $local_context->{report} || "";

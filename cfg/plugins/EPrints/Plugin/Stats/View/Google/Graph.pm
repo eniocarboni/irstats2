@@ -47,23 +47,22 @@ sub get_data
 	# the FROM/TO dates might need to be normalised if the date resolution is "month" or "year" (cos it's better to start at the beginning of the month/year for those)
 	my $from = $self->context->dates->{from};
 
-	if( $self->options->{date_resolution} eq 'month' )
-	{
-		if( defined $from && $from =~ /^(\d{4})(\d{2})(\d{2})$/ )
-		{
-			$from = $1.$2.'01';
-			$self->context->dates( { from => $from } );
-		}
-	}
-	elsif( $self->options->{date_resolution} eq 'year' )
-	{
-		if( $from =~ /^(\d{4})(\d{2})(\d{2})$/ )
-		{
-			$from = $1.'0101';
-			$self->context->dates( { from => $from } );
-		}
-	}
-
+#ENIO#	if( $self->options->{date_resolution} eq 'month' )
+#ENIO#	{
+#ENIO#		if( defined $from && $from =~ /^(\d{4})(\d{2})(\d{2})$/ )
+#ENIO#		{
+#ENIO#			$from = $1.$2.'01';
+#ENIO#			$self->context->dates( { from => $from } );
+#ENIO#		}
+#ENIO#	}
+#ENIO#	elsif( $self->options->{date_resolution} eq 'year' )
+#ENIO#	{
+#ENIO#		if( $from =~ /^(\d{4})(\d{2})(\d{2})$/ )
+#ENIO#		{
+#ENIO#			$from = $1.'0101';
+#ENIO#			$self->context->dates( { from => $from } );
+#ENIO#		}
+#ENIO#	}
 	# retrieves the data from the DB
 	my $stats = $self->handler->data( $self->context )->select(
 			fields => [ 'datestamp' ],
@@ -82,7 +81,6 @@ sub get_data
 	# this returns a continuous list of days/months/years - because there's no guarantee the data-points we retrieved from the DB are time-continuous (there
 	# might be gaps)
 	my $date_sections = EPrints::Plugin::Stats::Utils::get_dates( $from, $self->context->dates->{to}, $self->options->{date_resolution} );
-
 	my $date_res = $self->options->{date_resolution};
 	my $month_labels = EPrints::Plugin::Stats::Utils::get_month_labels( $self->{session} );
 	
@@ -118,7 +116,7 @@ sub get_data
 			else
 			{
 				# safety measure - not to be stuck on the 1st data point (though this probably means something is wrong in Utils::get_dates
-				$i++ if( $i == 0 );
+		#		$i++ if( $i == 0 );
 
 				last;
 			}

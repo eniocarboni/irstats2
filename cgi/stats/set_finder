@@ -55,7 +55,7 @@ my $q = $session->param( 'q' );
 
 my $values;
 
-if( $set_name eq 'eprintid' )
+if( $set_name eq 'eprintid' || $set_name eq 'eprint' )
 {
 	# special case - there should only be only one match
 	my $eprint = $session->dataset( 'archive' )->dataobj( $q );

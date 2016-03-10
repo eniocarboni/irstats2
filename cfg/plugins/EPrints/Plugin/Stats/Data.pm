@@ -130,11 +130,11 @@ sub select
 	# there are no dates filters and if we're not requesting the daily download counts (as on a download graph for instance)
 	#
 	# note that we don't check if "range" is set - because at this stage "range" has already been normalised to its "from" and "to" counterparts
-	if( !defined $context->{from} && !defined $context->{to} && !$self->has_field( 'datestamp' ) )
+	if(  !defined $context->{from} && !defined $context->{to} && !$self->has_field( 'datestamp' ) )
 	{
                 if( $handler->{dbh}->has_table( "irstats2_cache_$datatype" ) && ( !defined $context->{cache} || $context->{cache} ) )
 		{
-                        $context->{datatype} = "cache_$datatype";
+#ENIO#                        $context->{datatype} = "cache_$datatype";
 		}
         }
 
